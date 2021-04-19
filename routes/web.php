@@ -37,8 +37,8 @@ Route::prefix('posts')->middleware(['auth:sanctum', 'verified'])->group(function
     Route::post('/', [PostController::class, 'store'])
         ->name('posts.store');
 
-//    Route::get('/{post}', [PostController::class, 'show'])
-//        ->name('posts.show');
+    Route::get('/{post:slug}', [PostController::class, 'show'])
+        ->name('posts.show');
 
     Route::prefix('{post}')->group(function () {
 
@@ -52,9 +52,6 @@ Route::prefix('posts')->middleware(['auth:sanctum', 'verified'])->group(function
             ->name('posts.destroy');
 
         Route::prefix('comments')->group(function () {
-
-//            Route::get('/', [CommentController::class, 'index'])
-//                ->name('posts.comments.index');
 
             Route::get('/create', [CommentController::class, 'create'])
                 ->name('posts.comments.create');
@@ -70,9 +67,6 @@ Route::prefix('posts')->middleware(['auth:sanctum', 'verified'])->group(function
 
 Route::prefix('comments/{comment}')->middleware(['auth:sanctum', 'verified'])->group(function () {
 
-//    Route::get('/', [CommentController::class, 'show'])
-//        ->name('comments.show');
-
     Route::get('/edit', [CommentController::class, 'edit'])
         ->name('comments.edit');
 
@@ -82,6 +76,3 @@ Route::prefix('comments/{comment}')->middleware(['auth:sanctum', 'verified'])->g
     Route::delete('/', [CommentController::class, 'destroy'])
         ->name('comments.destroy');
 });
-
-Route::get('/posts/{post:slug}', [PostController::class, 'show'])
-    ->name('posts.show');
